@@ -1,7 +1,7 @@
 
 import streamlit as st
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
-from llama_index.llms import OpenAI
+from llama_index.llms.openai import OpenAI
 from llama_index.core.settings import Settings
 import os
 
