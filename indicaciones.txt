@@ -1,0 +1,33 @@
+📋 ¿Qué contiene el ZIP?
+app.py: la aplicación principal en Streamlit.
+
+docs_mineria/: textos base (tronadura y perforación).
+
+requirements.txt: librerías necesarias.
+
+README.txt: instrucciones paso a paso.
+
+🚀 ¿Cómo ejecutarlo?
+Descomprime el archivo.
+
+Abre una terminal en esa carpeta.
+
+Instala dependencias:
+
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+Configura tu API Key:
+
+bash
+Copiar
+Editar
+export OPENAI_API_KEY='tu_api_key_aqui'  # (en Windows: set OPENAI_API_KEY=...)
+Ejecuta la app:
+
+bash
+Copiar
+Editar
+streamlit run app.py
+Se abrirá en tu navegador en http://localhost:8501
