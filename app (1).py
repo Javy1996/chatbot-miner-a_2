@@ -1,8 +1,7 @@
-
 import os
 import streamlit as st
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
-from llama_index.llms import OpenAI as LlamaOpenAI
+from llama_index.llms.openai import OpenAI as LlamaOpenAI
 from llama_index.embeddings.openai import OpenAIEmbedding as LlamaEmbedding
 
 # Obtener clave desde secrets
@@ -28,4 +27,4 @@ query = st.text_input("Haz una pregunta sobre los documentos:")
 if query:
     response = index.as_query_engine().query(query)
     st.write("Respuesta:")
-    st.write(response)
+    st.write(response.response)
