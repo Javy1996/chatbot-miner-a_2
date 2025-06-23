@@ -1,37 +1,44 @@
 import os
 import streamlit as st
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
-from llama_index.llms.openai import OpenAI
-from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.llms import OpenAI as LlamaOpenAI
+from llama_index.embeddings import OpenAIEmbedding as LlamaEmbedding
 
-# Leer API key desde secrets
+# Leer la API Key de OpenAI desde los secrets
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 
-# Crear modelo LLM y de embedding
-llm = OpenAI(api_key=openai_api_key, model="gpt-3.5-turbo")
-embed_model = OpenAIEmbedding(api_key=openai_api_key, model="text-embedding-3-small")
+# Crear LLM y modelo de embedding con configuración mínima compatible
+llm = LlamaOpenAI(
+    model="gpt-3.5-turbo",
+    api_key=openai_api_key
+)
 
-# Contexto de servicio
+embed_model = LlamaEmbedding(
+    model="text-embedding-3-small",
+    api_key=openai_api_key
+)
+
+# Crear ServiceContext con ambos modelos
 service_context = ServiceContext.from_defaults(
     llm=llm,
     embed_model=embed_model
 )
 
-# Leer documentos desde la carpeta 'docs'
-docs = SimpleDirectoryReader("docs").load_data()
+# Cargar documentos desde /docs
+documents = SimpleDirectoryReader("docs").load_data()
 
 # Crear índice vectorial
-index = VectorStoreIndex.from_documents(docs, service_context=service_context)
+index = VectorStoreIndex.from_documents(documents, service_context=service_context)
 
-# Crear motor de preguntas
+# Crear motor de consulta
 query_engine = index.as_query_engine()
 
-# Interfaz Streamlit
+# Interfaz en Streamlit
 st.title("🤖 Chatbot Minero")
 
-user_question = st.text_input("Hazme una pregunta sobre los documentos:")
+question = st.text_input("¿Qué deseas saber?")
 
-if user_question:
+if question:
     with st.spinner("Pensando..."):
-        response = query_engine.query(user_question)
+        response = query_engine.query(question)
         st.write(response.response)
