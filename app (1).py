@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
-from llama_index.llms import OpenAI as LlamaOpenAI
+from llama_index.llms.openai import OpenAI as LlamaOpenAI
 from llama_index.embeddings.openai import OpenAIEmbedding as LlamaEmbedding
 # Obtener clave desde secrets
 openai_api_key = st.secrets["OPENAI_API_KEY"]
